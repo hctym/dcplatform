@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis_mapper.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhsj.dcplatform.dao.TBDeveloperDao">
+
+   <sql id="TABLE">
+      tb_developer
+   </sql>
+   
+   <sql id="FIELDS">
+      id, name, account, password, mobile, email, is_delete, status, utime, ctime
+   </sql>
+
+   <insert id="insert" keyProperty="id">
+      insert into <include refid="TABLE"/> (
+        name, account, password, mobile, email, is_delete, status, utime, ctime
+      ) values (
+       #{name}, #{account}, #{password}, #{mobile}, #{email}, 0, 1, unix_timestamp(now()), unix_timestamp(now()) 
+      )
+   </insert>
+   
+   
+   <select id="getList" resultType="developer">
+       select <include refid="FIELDS"/>
+       from <include refid="TABLE"/>
+       where status = 1 and is_delete = 0
+   </select>
+
+
+</mapper>
