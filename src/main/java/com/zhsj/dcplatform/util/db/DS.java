@@ -5,7 +5,7 @@ package com.zhsj.dcplatform.util.db;
  */
 public class DS {
     public static final String DB_MANAGE = "dbManage";
-    public static final String DB_ORDER = "dbOrder";
+    public static final String DB_Data = "dbData";
     
     
 }

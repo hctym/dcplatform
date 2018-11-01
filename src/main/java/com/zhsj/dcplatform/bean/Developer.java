@@ -76,5 +76,13 @@ public class Developer {
 	}
 	
 	
+	@Override
+	public String toString() {
+		return "Developer [id=" + id + ", name=" + name + ", account=" + account + ", password=" + password
+				+ ", mobile=" + mobile + ", email=" + email + ", isDelete=" + isDelete + ", status=" + status
+				+ ", utime=" + utime + ", ctime=" + ctime + "]";
+	}
+	
+	
 	
 }

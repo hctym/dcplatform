@@ -1,15 +1,9 @@
 package com.zhsj.dcplatform.controller;
 
-import java.io.UnsupportedEncodingException;
-import java.net.CookieStore;
-import java.net.URLEncoder;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.aspectj.weaver.ast.Var;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
-import com.zhsj.dcplatform.constant.CookieContant;
+import com.zhsj.dcplatform.bean.Developer;
 import com.zhsj.dcplatform.service.DeveloperService;
-import com.zhsj.dcplatform.util.AESUtils;
 import com.zhsj.dcplatform.util.CommonResult;
-import com.zhsj.dcplatform.util.CookieUtils;
-import com.zhsj.dcplatform.util.MD5Util;
 
 @Controller
 @RequestMapping(value="developer")
@@ -37,14 +27,64 @@ public class DeveloperController {
 	
 	@RequestMapping(value="getList")
 	@ResponseBody
-	public Object getList(){
+	public Object getList(int page, int pageSize){
 		logger.info("#DeveloperController.getList#");
-		CommonResult result = developerService.getList();
-		logger.info("#DeveloperController.getList# result={}", result);
-		return result;
+		ModelAndView mv = new ModelAndView();
+		Map<String, Object> resultMap = developerService.getList(page, pageSize);
+		mv.addObject("map", resultMap);
+		if(page == 1){
+			mv.setViewName("developer/developerList");
+		}else{
+			mv.setViewName("developer/developerData");
+		}
+		return mv;
 	}
 	
 	
+	
+	
+	@RequestMapping("addPage")
+	public Object addPage(){
+		logger.info("#DeveloperController.addPage#");
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("developer/add");
+		return mv;
+	}
+	
+	
+	
+	@RequestMapping(value="add")
+	@ResponseBody
+	public Object add(Developer developer){
+		logger.info("#DeveloperController.add# developer={}", developer);
+		if(StringUtils.isBlank(developer.getAccount())){
+			return CommonResult.build(2, "账号不能为空");
+		}
+		if(StringUtils.isBlank(developer.getName())){
+			return CommonResult.build(2, "名称不能为空");
+		}
+		if(StringUtils.isBlank(developer.getPassword())){
+			return CommonResult.build(2, "密码不能为空");
+		}
+		if(StringUtils.isBlank(developer.getMobile())){
+			return CommonResult.build(2, "手机号不能为空");
+		}
+		if(StringUtils.isBlank(developer.getEmail())){
+			return CommonResult.build(2, "邮箱不能为空");
+		}
+		CommonResult result = developerService.insert(developer);
+		logger.info("#DeveloperController.add# result={}", result);
+		return result;
+	}
+	
+	@RequestMapping(value="delete")
+	@ResponseBody
+	public Object delete(int id){
+		logger.info("#DeveloperController.delete# id={}", id);
+		CommonResult result = developerService.deleteById(id);
+		logger.info("#DeveloperController.delete# result={}", result);
+		return result;
+	}
 	
 	
 	

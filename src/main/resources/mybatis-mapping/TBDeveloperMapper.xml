@@ -23,6 +23,14 @@
        select <include refid="FIELDS"/>
        from <include refid="TABLE"/>
        where status = 1 and is_delete = 0
+       order by id desc 
+       limit #{start},#{pageSize}
+   </select>
+
+
+   <select id="getCount" resultType="Integer">
+       select count(1) from <include refid="TABLE"/>
+       where status = 1 and is_delete = 0;
    </select>
 
 
@@ -32,6 +40,28 @@
        where status = 1 and is_delete = 0 
        and account= #{account}
    </select>
+   
+   <delete id="deleteById">
+      delete from <include refid="TABLE"/>
+      <where>
+         id = #{id}
+      </where>
+   </delete>
+   
+   
+   <update id="update">
+      update <include refid="TABLE"/>
+       <set>
+         name = #{name},
+         mobile = #{mobile},
+         email = #{email},
+         utime = unix_timestamp(now())
+       </set>
+       <where>
+          id = #{id}
+       </where>
+   </update>
+   
 
 
 </mapper>

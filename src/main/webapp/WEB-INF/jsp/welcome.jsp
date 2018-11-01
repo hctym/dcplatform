@@ -13,12 +13,70 @@
         <link rel="stylesheet" href="./css/xadmin.css">
         <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
         <script src="./lib/layui/layui.js" charset="utf-8"></script>
+        <style type="text/css">
+        /*背景局部清晰*/
+		.bg{
+		    width: 100%;
+		    height: 100%;
+/*  		    position: relative;  */
+            background-repeat: no-repeat;
+            background-attachment:fixed;
+		    background-image: url(image/timg1.jpg);
+		    padding: 1px;
+		    box-sizing: border-box;
+		    background-position: 50% 50%;
+		    margin: 0;
+		    padding: 0;
+		    background-size: cover;
+		    background-repeat: no-repeat;
+		}
+		.bg:after{
+		    content: "";
+		    width:100%;
+		    height:100%;
+		    position: absolute;
+		    left:0;
+		    top:0;
+		    background: inherit;
+		    filter: blur(2px);
+        }
+
+        .word{
+            position:absolute;
+            right:12em;
+            top:10em;
+            
+        }
+        .word1{
+            position:absolute;
+            right:14.5em;
+            top:13em;
+        }
+        .word p,.word1 p{
+           margin:0 auto;
+           width:20px;
+           line-height:24px;
+           font-size:24px;
+           color: #EEE;
+        }
+        </style>
     </head>
     <body>
-    <div class="x-body layui-anim layui-anim-up">
-        <blockquote class="layui-elem-quote">欢迎管理员：
-        <span class="x-red">${loginUser.name }</span>！当前时间:<span id="time">${time }</span></blockquote>
-    </div>
+        <div class="bg">
+	        
+        </div>
+        <div class="x-body layui-anim layui-anim-up" style="z-index:20;">
+	        <blockquote class="layui-elem-quote">欢迎管理员：
+	        <span class="x-red">${loginUser.name }</span>！当前时间:<span id="time">${time }</span></blockquote>
+	    </div>
+	    <div class="word">
+	         <p>人生若只如初见</p>
+	        
+	    </div>
+	    <div class="word1">
+	          <p>何事秋风悲画扇</p>
+	    </div>
+	    
     </body>
 </html>
 <script>
@@ -54,8 +112,33 @@ Date.prototype.Format = function(fmt)
 			  t = Number(t)+1000;
 		      $("#time").text(new Date(t).Format("yyyy-MM-dd hh:mm:ss"));
 		  },1e3);
+		  var f = Math.floor(Math.random()*7+1);
+		  $(".bg").css("background-image","url(image/timg"+f+".jpg)")
 	  })
-	  
+	  var wd = [];
+	  wd.push({
+		  a:'人生若只如初见',
+		  b:'何事秋风悲画扇'
+	  });
+	  wd.push({
+		  a:'但愿人长久',
+		  b:'千里共婵娟'
+	  });
+	  wd.push({
+		  a:'忽如一夜春风来',
+		  b:'千树万树梨花开'
+	  });
+	  wd.push({
+		  a:'出师未捷身先死',
+		  b:'长使英雄泪沾襟'
+	  })
+	  wd.push({
+		  a:'当断不断',
+		  b:'反受其乱'
+	  })
+	  var s = Math.floor(Math.random()*5+1);
+	  $(".word p").text(wd[s-1].a);
+	  $(".word1 p").text(wd[s-1].b);
 	  
   })
 

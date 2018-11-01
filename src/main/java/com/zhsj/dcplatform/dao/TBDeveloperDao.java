@@ -10,14 +10,18 @@ import com.zhsj.dcplatform.util.db.DS;
 import com.zhsj.dcplatform.util.db.DynamicDataSource;
 
 @Component
-@DynamicDataSource(DS.DB_MANAGE)
+@DynamicDataSource(DS.DB_Data)
 public interface TBDeveloperDao {
 
 	int insert(Developer developer);
 	
-	List<Developer> getList();
+	List<Developer> getList(@Param("start")int start, @Param("pageSize")int pageSize);
 	
 	int getCount();
 
 	Developer getByAccount(@Param("account")String account);
+	
+	int deleteById(@Param("id")int id);
+	
+	int update(Developer developer);
 }
