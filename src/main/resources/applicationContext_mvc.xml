@@ -16,10 +16,11 @@
     <mvc:annotation-driven/>
     <mvc:resources mapping="/*.txt" location="/" />
     <mvc:resources mapping="/*.html" location="/" />
-<!--     <mvc:resources mapping="/javascript/libs/*.js" location="/resources/javascript/libs/" /> -->
     <mvc:resources mapping="/javascript/**" location="/resources/javascript/" />
     <mvc:resources mapping="/image/**" location="/resources/image/" />
     <mvc:resources mapping="/css/**" location="/resources/css/" />
+    <mvc:resources mapping="/fonts/**" location="/resources/fonts/" />
+    <mvc:resources mapping="/lib/layui/**" location="/resources/lib/layui/" />
 
 
     <!-- 避免IE执行AJAX时,返回JSON出现下载文件 -->
@@ -46,7 +47,7 @@
     <bean  class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
         <property name="viewClass"
                   value="org.springframework.web.servlet.view.JstlView" />
-        <property name="prefix" value="/WEB-INF/" />
+        <property name="prefix" value="/WEB-INF/jsp/" />
         <property name="suffix" value=".jsp" />
     </bean>
 
@@ -67,10 +68,11 @@
 
 	<mvc:interceptors>
 		<mvc:interceptor>
-<!-- 			<mvc:mapping path="/cashierV3/**"/> -->
-<!--             <mvc:exclude-mapping path="/cashierV3/sign"/> -->
-<!--             <mvc:exclude-mapping path="/cashierV3/signOut"/> -->
             <mvc:mapping path="/developer/**"/>
+            <mvc:mapping path="/index"/>
+            <mvc:mapping path="/welcome"/>
+            <mvc:exclude-mapping path="/login"/>
+            <mvc:exclude-mapping path="/logout"/>
             <bean class="com.zhsj.dcplatform.interceptors.DcInterceptor" />
         </mvc:interceptor>
 	</mvc:interceptors>

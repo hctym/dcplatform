@@ -2,6 +2,7 @@ package com.zhsj.dcplatform.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import com.zhsj.dcplatform.bean.Developer;
@@ -17,4 +18,6 @@ public interface TBDeveloperDao {
 	List<Developer> getList();
 	
 	int getCount();
+
+	Developer getByAccount(@Param("account")String account);
 }

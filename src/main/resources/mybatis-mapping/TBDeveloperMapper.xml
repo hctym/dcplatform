@@ -26,4 +26,12 @@
    </select>
 
 
+   <select id="getByAccount" resultType="developer">
+       select <include refid="FIELDS"/>
+       from <include refid="TABLE"/>
+       where status = 1 and is_delete = 0 
+       and account= #{account}
+   </select>
+
+
 </mapper>
