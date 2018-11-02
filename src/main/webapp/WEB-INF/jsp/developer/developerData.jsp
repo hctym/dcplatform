@@ -2,20 +2,8 @@
     pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
-	      <table class="layui-table">
-	        <thead>
-	          <tr>
-	            <th>序号</th>
-	            <th>用户名</th>
-	            <th>账号</th>
-	            <th>手机</th>
-	            <th>邮箱</th>
-	            <th>加入时间</th>
-	            <th>状态</th>
-	            <th>操作</th></tr>
-	        </thead>
-	        <tbody>
-	          <c:choose>
+
+        <c:choose>
 	             <c:when test="${map.list.size() > 0 }">
 	               <c:forEach items="${map.list }" var="developer" varStatus="status">
 			          <tr>
@@ -47,7 +35,7 @@
 				                <i class="layui-icon">&#xe601;</i>
 				              </a>
 			               </c:if>
-			              <a title="编辑"  onclick="x_admin_show('编辑','editPage?id=${developer.id}',650,460)" href="javascript:;">
+			               <a title="编辑"  onclick="x_admin_show('编辑','editPage?id=${developer.id}',650,460)" href="javascript:;">
 			                <i class="layui-icon">&#xe642;</i>
 			              </a>
 <%-- 			              <a onclick="x_admin_show('修改密码','updatePassPage?id=${developer.id}',650,460)" title="修改密码" href="javascript:;"> --%>
@@ -66,41 +54,3 @@
 						</tr>
 		          </c:otherwise>
 	          </c:choose>
-	        </tbody>
-	      </table>
-	      <div class="page" id="ppage">
-	      </div>
-<script type="text/javascript">
-	$(function(){
-		  layui.use('laypage',function(){
-			  var laypage = layui.laypage;
-			  laypage.render({
-			    elem: 'ppage',
-			    limit:10,
-			    count: '${map.count}',
-			    jump: function(obj, first){
-			        //obj包含了当前分页的所有参数，比如：
-// 			        console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
-// 			        console.log(obj.limit); //得到每页显示的条数
-			        loadData(obj.curr);
-			        //首次不执行
-			        if(!first){
-			          //do something
-			        }
-			    }
-			  });
-		  })
-	}) 
-	
-	
-	function loadData(curr){
-		$("tbody").load("./getList",{
-			account: $("#account").val(),
-			page: curr,
-			pageSize: 10,
-			flag:0,
-		})
-		
-	}
-
-</script>    

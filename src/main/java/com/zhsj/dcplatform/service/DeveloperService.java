@@ -25,22 +25,22 @@ public class DeveloperService {
 	private TBDeveloperDao tbDeveloperDao;
 	
 	
-	public Map<String, Object> getList(int page, int pageSize){
-		logger.info("#DeveloperService.getList# page={}, pageSize={}", page, pageSize);
+	public Map<String, Object> getList(String account, int page, int pageSize){
+		logger.info("#DeveloperService.getList# account={}, page={}, pageSize={}", account, page, pageSize);
 		Map<String, Object> resultMap = new HashMap<>();
 		page = page<1?1:page;
 		pageSize = pageSize<1?10:pageSize;
 		try {
 			int start = (page-1)*pageSize;
-			List<Developer> list = tbDeveloperDao.getList(start, pageSize);
+			List<Developer> list = tbDeveloperDao.getList(account, start, pageSize);
 			resultMap.put("list", list);
 			if(page == 1){
-			   int count = tbDeveloperDao.getCount();
+			   int count = tbDeveloperDao.getCount(account);
 			   resultMap.put("count", count);
 			}
 			
 		} catch (Exception e) {
-			logger.error("#Developer.getList# page={}, pageSize={}", page, pageSize, e);
+			logger.error("#Developer.getList# account={}, page={}, pageSize={}", account, page, pageSize, e);
 		}
 		return resultMap;
 	}
@@ -102,6 +102,41 @@ public class DeveloperService {
 	}
 	
 	
+	
+	public CommonResult updateStatus(int id, int status){
+		logger.info("#Developer.updateStatus# id={}, status={}", id, status);
+		try {
+			tbDeveloperDao.updateStatus(id, status);
+			return CommonResult.success("更新成功");
+		} catch (Exception e) {
+			logger.error("#Developer.updateStatus# id={}, status={}", id, status, e);
+		}
+		return CommonResult.defaultError("出错了呀");
+	}
+
+
+	public Developer getById(int id) {
+		logger.info("#Developer.getById# id={}", id);
+		try {
+			Developer developer = tbDeveloperDao.getById(id);
+			return developer;
+		} catch (Exception e) {
+			logger.error("#Developer.getById# id={}", id, e);
+		}
+		return null;
+	}
+
+
+	public CommonResult update(Developer developer) {
+		logger.info("#Developer.update# developer={}", developer);
+		try {
+			tbDeveloperDao.update(developer);
+			return CommonResult.success("编辑成功");
+		} catch (Exception e) {
+			logger.error("#Developer.update# developer={}", developer, e);
+		}
+		return CommonResult.defaultError("出错了呀");
+	}
 	
 	
 	

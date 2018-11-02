@@ -23,13 +23,14 @@
   <body>
     <div class="x-body layui-anim layui-anim-up">
         <form class="layui-form">
+           <input type="hidden" id="id" name="id" value="${developer.id }">
            <div class="layui-form-item">
               <label for="L_email" class="layui-form-label">
                   <span class="x-red">*</span>账号
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_account" name="account" required="" lay-verify="required"
-                  autocomplete="off" class="layui-input">
+                  <input type="text" id="L_account" name="account" 
+                  autocomplete="off" class="layui-input" readonly="readonly" disabled="disabled" value="${developer.account }">
               </div>
               <div class="layui-form-mid layui-word-aux">
                   <span class="x-red">*</span>将会成为您唯一的登入名
@@ -41,7 +42,7 @@
               </label>
               <div class="layui-input-inline">
                   <input type="text" id="L_mobile" name="mobile" required="" lay-verify="phone"
-                  autocomplete="off" class="layui-input">
+                  autocomplete="off" class="layui-input" value="${developer.mobile }">
               </div>
           </div>
           <div class="layui-form-item">
@@ -50,7 +51,7 @@
               </label>
               <div class="layui-input-inline">
                   <input type="text" id="L_email" name="email" required="" lay-verify="email"
-                  autocomplete="off" class="layui-input">
+                  autocomplete="off" class="layui-input" value="${developer.email }">
               </div>
           </div>
           <div class="layui-form-item">
@@ -59,35 +60,14 @@
               </label>
               <div class="layui-input-inline">
                   <input type="text" id="L_name" name="name" required="" lay-verify="nikename"
-                  autocomplete="off" class="layui-input">
-              </div>
-          </div>
-          <div class="layui-form-item">
-              <label for="L_pass" class="layui-form-label">
-                  <span class="x-red">*</span>密码
-              </label>
-              <div class="layui-input-inline">
-                  <input type="password" id="L_password" name="password" required="" lay-verify="password"
-                  autocomplete="off" class="layui-input">
-              </div>
-              <div class="layui-form-mid layui-word-aux">
-                  6到16个字符
-              </div>
-          </div>
-          <div class="layui-form-item">
-              <label for="L_repass" class="layui-form-label">
-                  <span class="x-red">*</span>确认密码
-              </label>
-              <div class="layui-input-inline">
-                  <input type="password" id="L_repass" name="repass" required="" lay-verify="repass"
-                  autocomplete="off" class="layui-input">
+                  autocomplete="off" class="layui-input" value="${developer.name }">
               </div>
           </div>
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label">
               </label>
-              <button  class="layui-btn" lay-filter="add" lay-submit="">
-                  增加
+              <button  class="layui-btn" lay-filter="edit" lay-submit="">
+                  编辑
               </button>
           </div>
       </form>
@@ -105,21 +85,15 @@
                 return '昵称至少得5个字符啊';
               }
             }
-            ,password: [/(.+){6,12}$/, '密码必须6到12位']
-            ,repass: function(value){
-                if($('#L_password').val()!=$('#L_repass').val()){
-                    return '两次密码不一致';
-                }
-            }
           });
 
           //监听提交
-          form.on('submit(add)', function(data){
+          form.on('submit(edit)', function(data){
             console.log(data);
             //发异步，
-            $.post("./add",data.field,function(result){
+            $.post("./edit",data.field,function(result){
             	if(result.code == 0){
-		            layer.alert("增加成功", {icon: 6},function () {
+		            layer.alert("编辑成功", {icon: 6},function () {
 		                var index = parent.layer.getFrameIndex(window.name);
 		                parent.layer.close(index);
 		                parent.loadList();

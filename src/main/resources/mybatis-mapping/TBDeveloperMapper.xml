@@ -22,7 +22,10 @@
    <select id="getList" resultType="developer">
        select <include refid="FIELDS"/>
        from <include refid="TABLE"/>
-       where status = 1 and is_delete = 0
+       where  is_delete = 0
+       <if test="account != null and account != ''">
+          and account = #{account}
+       </if>
        order by id desc 
        limit #{start},#{pageSize}
    </select>
@@ -30,14 +33,17 @@
 
    <select id="getCount" resultType="Integer">
        select count(1) from <include refid="TABLE"/>
-       where status = 1 and is_delete = 0;
+       where  is_delete = 0
+       <if test="account != null and account != ''">
+          and account = #{account}
+       </if>
    </select>
 
 
    <select id="getByAccount" resultType="developer">
        select <include refid="FIELDS"/>
        from <include refid="TABLE"/>
-       where status = 1 and is_delete = 0 
+       where is_delete = 0 
        and account= #{account}
    </select>
    
@@ -62,6 +68,29 @@
        </where>
    </update>
    
+   
+   <update id="updateStatus">
+       update <include refid="TABLE"/>
+         <set>
+           status = #{status},
+           utime = unix_timestamp(now())
+         </set>
+         <where>
+            id = #{id}
+         </where>
+   </update>
+
+
+    <select id="getById" resultType="developer">
+        select <include refid="FIELDS"/>
+        from <include refid="TABLE"/>
+        <where>
+           id = #{id}
+        </where>
+    </select>
+   
+   
+
 
 
 </mapper>

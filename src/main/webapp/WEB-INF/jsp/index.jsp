@@ -50,7 +50,7 @@
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="developer/getList?page=1&pageSize=0">
+                        <a _href="developer/getPage">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>员工列表</cite>
                             

@@ -24,15 +24,25 @@ public class DeveloperController {
 	@Autowired
 	private DeveloperService developerService;
 	
+	@RequestMapping(value="getPage")
+	@ResponseBody
+	public Object getPage(){
+		logger.info("#developer.getPage#");
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("developer/developerPage");
+		return mv;
+	}
+	
+	
 	
 	@RequestMapping(value="getList")
 	@ResponseBody
-	public Object getList(int page, int pageSize){
-		logger.info("#DeveloperController.getList#");
+	public Object getList(int page, int pageSize, String account, int flag){
+		logger.info("#DeveloperController.getList# page={},pageSize={}, account={}, flag={}", page, pageSize, account, flag);
 		ModelAndView mv = new ModelAndView();
-		Map<String, Object> resultMap = developerService.getList(page, pageSize);
+		Map<String, Object> resultMap = developerService.getList(account, page, pageSize);
 		mv.addObject("map", resultMap);
-		if(page == 1){
+		if(flag == 1){
 			mv.setViewName("developer/developerList");
 		}else{
 			mv.setViewName("developer/developerData");
@@ -87,6 +97,34 @@ public class DeveloperController {
 	}
 	
 	
+	@RequestMapping(value="updateStatus")
+	@ResponseBody
+	public Object updateStatus(int id, int status){
+		logger.info("#DeveloperController.updateStatus# id={}, status={}", id, status);
+		CommonResult result = developerService.updateStatus(id, status);
+		logger.info("#DeveloperController.updateStatus# result={}", result);
+		return result;
+	}
+	
+	@RequestMapping(value="editPage")
+	public Object editPage(int id){
+		logger.info("#DeveloperController.editPage# id={}");
+		ModelAndView mv = new ModelAndView();
+		Developer developer = developerService.getById(id);
+		mv.addObject("developer", developer);
+		mv.setViewName("developer/edit");
+		return mv;
+	}
+	
+	
+	@RequestMapping(value="edit")
+	@ResponseBody
+	public Object edit(Developer developer){
+		logger.info("#DeveloperController.edit# developer={}", developer);
+		CommonResult result = developerService.update(developer);
+		logger.info("#DeveloperController.edit# result={}", result);
+		return result;
+	}
 	
 	
 }

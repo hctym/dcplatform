@@ -15,13 +15,17 @@ public interface TBDeveloperDao {
 
 	int insert(Developer developer);
 	
-	List<Developer> getList(@Param("start")int start, @Param("pageSize")int pageSize);
+	List<Developer> getList(@Param("account")String account, @Param("start")int start, @Param("pageSize")int pageSize);
 	
-	int getCount();
+	int getCount(@Param("account")String account);
 
 	Developer getByAccount(@Param("account")String account);
 	
 	int deleteById(@Param("id")int id);
 	
 	int update(Developer developer);
+
+	int updateStatus(@Param("id")int id, @Param("status")int status);
+
+	Developer getById(@Param("id")int id);
 }
